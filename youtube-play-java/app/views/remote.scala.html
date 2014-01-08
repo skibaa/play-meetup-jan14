@@ -1,0 +1,36 @@
+@(playerForm:Form[PlayerConnect])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("YouTube Remote") {
+
+} {
+    @if(playerForm.hasGlobalErrors) {
+        <div class="alert-danger">
+            @playerForm.globalError.message
+        </div>
+    }
+
+    @form(action = routes.Application.connectRemote()) {
+        <fieldset>
+            <legend>Required fields</legend>
+            @inputText(
+                playerForm("playerId"),
+                '_label -> "Player ID"
+            )
+        </fieldset>
+        <fieldset>
+            <legend>Optional fields</legend>
+            @inputText(
+                playerForm("user"),
+                '_label -> "User"
+            )
+            @inputPassword(playerForm("password"), '_label -> "Password")
+        </fieldset>
+        <div class="actions">
+            <input type="submit" class="btn primary" value="Connect">
+            <a href="@routes.Application.index" class="btn">Cancel</a>
+        </div>
+    }
+}
