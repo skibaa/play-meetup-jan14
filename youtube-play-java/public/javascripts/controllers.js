@@ -17,4 +17,21 @@ youtubeSearch.controller('YouTubeSearchCtrl', function ($scope) {
             $scope.$apply()
         });
     }
+
+    $scope.playError = false
+    $scope.playStatus = null
+
+    $scope.onPlay = function (videoId, thumbnailUrl) {
+        var playRoute = jsRoutes.controllers.Application.playVideo(videoId, thumbnailUrl)
+
+        playRoute.ajax().done (function(res) {
+            $scope.playError = res.error
+            $scope.playStatus = res.status
+            $scope.$apply()
+        }).fail(function(res) {
+            $scope.playError = res.responseText
+            $scope.playStatus = null
+            $scope.$apply()
+        })
+    }
 });

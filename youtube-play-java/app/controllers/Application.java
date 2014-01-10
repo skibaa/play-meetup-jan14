@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.PlayerConnect;
 import play.*;
 import play.data.Form;
@@ -51,7 +52,8 @@ public class Application extends Controller {
         response().setContentType("text/javascript");
         return ok(
             Routes.javascriptRouter("jsRoutes",
-                controllers.routes.javascript.Application.search()
+                controllers.routes.javascript.Application.search(),
+                controllers.routes.javascript.Application.playVideo()
             )
         );
     }
@@ -77,5 +79,15 @@ public class Application extends Controller {
 
     private static JsonNode transformJson(JsonNode searchResponse) {
         return searchResponse;
+    }
+
+    public static Result playVideo(String videoId, String thumbnailUrl) {
+        ObjectNode json = Json.newObject();
+        json.put("error", false)
+            .put("status", Json.newObject()
+                .put("status", "playing")
+                .put("thumbnail",thumbnailUrl)
+            );
+        return ok(json);
     }
 }
