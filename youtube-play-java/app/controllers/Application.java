@@ -91,7 +91,7 @@ public class Application extends Controller {
     public static Result playVideo(Integer playerId, String videoId, String thumbnailUrl) {
         ObjectNode json = Json.newObject();
         PlayerInfo playerInfo = players.get(playerId);
-        if (playerId == null) {
+        if (playerInfo == null) {
             json.put("error", "Player does not exist or was closed.");
             return ok(json);
         }
