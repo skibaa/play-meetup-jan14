@@ -57,9 +57,10 @@ public class Application extends Controller {
     }
 
     public static Promise<Result> search(String query) {
-        Promise<WS.Response> responsePromise = WS.url("https://www.googleapis.com/youtube/v3/search1")
+        Promise<WS.Response> responsePromise = WS.url("https://www.googleapis.com/youtube/v3/search")
                 .setQueryParameter("part", "snippet")
                 .setQueryParameter("q", query)
+                .setQueryParameter("key", "AIzaSyDg-_FDKc2FDD2kAzZSE3Idtjf4O2Ynm58")
                 .get();
         Promise<Result> resultPromise = responsePromise.map(new Function<WS.Response, Result>() {
             @Override

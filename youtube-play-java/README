@@ -4,3 +4,5 @@ This is your new Play application
 This file will be packaged with your application, when using `play dist`.
 
 forms: http://www.playframework.com/documentation/2.2.x/JavaFormHelpers
+
+YouTube API: https://cloud.google.com/console/project/apps~agile-future-456/apiui/api/youtube/method/youtube.search.list
