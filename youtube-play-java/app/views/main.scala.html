@@ -2,19 +2,21 @@
 
 <!DOCTYPE html>
 
-<html lang="en" ng-ap>
+<html lang="en" ng-app="youtubeSearch">
     <head>
         <title>@title</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/angular.min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/angular.min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/controllers.js")"></script>
+
         <script type="text/javascript" src="@routes.Application.javascriptRoutes"></script>
 
         @headContent
 
     </head>
-    <body>
+    <body ng-controller="YouTubeSearchCtrl">
         <div class="container">
             <div class="navbar navbar-inverse navbar-fixed-top">
                 <h1 class="fill">

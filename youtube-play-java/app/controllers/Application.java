@@ -1,5 +1,6 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import models.PlayerConnect;
 import play.*;
 import play.data.Form;
@@ -10,6 +11,12 @@ import views.html.*;
 import views.html.index;
 import views.html.player;
 import views.html.remote;
+
+import play.libs.WS;
+import play.mvc.Result;
+
+import static play.libs.F.Function;
+import static play.libs.F.Promise;
 
 public class Application extends Controller {
 
@@ -49,7 +56,25 @@ public class Application extends Controller {
         );
     }
 
-    public static Result search() {
-        return ok(Json.newObject().put("test", "passed"));
+    public static Promise<Result> search(String query) {
+        Promise<WS.Response> responsePromise = WS.url("https://www.googleapis.com/youtube/v3/search1")
+                .setQueryParameter("part", "snippet")
+                .setQueryParameter("q", query)
+                .get();
+        Promise<Result> resultPromise = responsePromise.map(new Function<WS.Response, Result>() {
+            @Override
+            public Result apply(WS.Response response) throws Throwable {
+                if (response.getStatus() != OK)
+                    return status(response.getStatus(), response.getBody());
+
+                JsonNode searchResponse = response.asJson();
+                return ok(transformJson(searchResponse));
+            }
+        });
+        return resultPromise;
+    }
+
+    private static JsonNode transformJson(JsonNode searchResponse) {
+        return searchResponse;
     }
 }

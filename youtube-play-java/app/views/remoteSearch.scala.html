@@ -1,13 +1,18 @@
 @(playerId:Int)
 
 @main("YouTube Remote") {
-<script>
-  var onSearch = function (evt) {
-      jsRoutes.controllers.Application.search( ).ajax( ).done(function(res) {
-        alert(res.test);
-      });
-  }
-</script>
+
+    <script>
+
+      var onSearch = function (evt) {
+          var query = $('#query' ).val()
+          jsRoutes.controllers.Application.search(query).ajax( ).done(function(res) {
+              alert(res.test);
+          } ).fail(function(res) {
+              console.log('Search failed:'+res.responseText);
+          });
+      }
+    </script>
 } {
     <div class="center-block text-center" xmlns="http://www.w3.org/1999/html">
         <h1>Successfully connected</h1>
@@ -27,5 +32,13 @@
 
     <hr/>
 
-
+    <table class="table">
+        <tr ng-repeat="result in searchResults">
+            <td>
+                <h4><a href="{{result.videoId}}">{{result.title}}</a></h4>
+                {{result.description}}
+            </td>
+            <td><img src="{{result.thumbnail}}"></td>
+        </tr>
+    </table>
 }
