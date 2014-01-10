@@ -4,10 +4,36 @@
 <html>
   <body>
       <h3>ID: @id</h3>
+      <h2 id="socketError">WebSocket not connected</h2>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
 
     <script>
+      var wsUrl = "@routes.Application.playerWebSocket(id).webSocketURL()"
+      var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket
+      remoteWebSocket = new WS (wsUrl)
+
+      remoteWebSocket.onerror = function(evt) {
+          $("#socketError").text(evt.data)
+          $("#socketError").show()
+      }
+
+      remoteWebSocket.onopen = function() {
+          $("#socketError").hide()
+          remoteWebSocket.send("WS is open")
+      }
+
+      remoteWebSocket.onmessage = function(message) {
+          var data = message.data
+          console.log('data:'+data);
+          if(data.error) {
+              $("#socketError").text(data.error)
+              $("#socketError").show()
+          }
+
+          player.loadVideoById({videoId:data.videoId})
+      }
+
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
 
@@ -49,5 +75,7 @@
         player.stopVideo();
       }
     </script>
+    <script src="@routes.Assets.at("javascripts/jquery-1.10.2.min.js")" type="text/javascript"></script>
+
   </body>
 </html>

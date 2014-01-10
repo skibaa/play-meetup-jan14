@@ -3,11 +3,14 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.PlayerConnect;
+import models.PlayerInfo;
 import play.*;
 import play.data.Form;
+import play.libs.F;
 import play.libs.Json;
 import play.mvc.*;
 
+import scala.util.parsing.json.JSONObject;
 import views.html.*;
 import views.html.index;
 import views.html.player;
@@ -16,10 +19,14 @@ import views.html.remote;
 import play.libs.WS;
 import play.mvc.Result;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import static play.libs.F.Function;
 import static play.libs.F.Promise;
 
 public class Application extends Controller {
+    static ConcurrentMap<Integer, PlayerInfo> players = new ConcurrentHashMap<Integer, PlayerInfo>();
 
     public static Result index() {
         return ok(index.render());
@@ -89,5 +96,31 @@ public class Application extends Controller {
                 .put("thumbnail",thumbnailUrl)
             );
         return ok(json);
+    }
+
+    public static WebSocket<JsonNode> playerWebSocket(final Integer playerId) {
+        return new WebSocket<JsonNode>() {
+            @Override
+            public void onReady(In<JsonNode> jsonNodeIn, Out<JsonNode> jsonNodeOut) {
+                final PlayerInfo playerInfo = new PlayerInfo();
+                playerInfo.playerId = playerId;
+                playerInfo.outSocket = jsonNodeOut;
+
+                if (players.putIfAbsent(playerId, playerInfo) != null) {
+                    //there is another player with the same ID
+                    ObjectNode jsonError = Json.newObject();
+                    jsonError.put("error", "Player ID is not available");
+                    jsonNodeOut.write(jsonError);
+                    return;
+                }
+
+                jsonNodeIn.onClose(new F.Callback0() {
+                    @Override
+                    public void invoke() throws Throwable {
+                        players.remove(playerId, playerInfo);
+                    }
+                });
+            }
+        };
     }
 }

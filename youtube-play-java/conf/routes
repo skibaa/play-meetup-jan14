@@ -9,6 +9,7 @@ GET         /remote                  controllers.Application.remote()
 GET         /javascriptRoutes        controllers.Application.javascriptRoutes()
 GET         /search                  controllers.Application.search(query:String)
 GET         /play                    controllers.Application.playVideo(videoId:String, thumbnailUrl:String)
+GET         /playerWS                controllers.Application.playerWebSocket(playerId:Int)
 
 POST        /connectRemote           controllers.Application.connectRemote()
 
