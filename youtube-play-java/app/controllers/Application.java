@@ -88,8 +88,14 @@ public class Application extends Controller {
         return searchResponse;
     }
 
-    public static Result playVideo(String videoId, String thumbnailUrl) {
+    public static Result playVideo(Integer playerId, String videoId, String thumbnailUrl) {
         ObjectNode json = Json.newObject();
+        PlayerInfo playerInfo = players.get(playerId);
+        if (playerId == null) {
+            json.put("error", "Player does not exist or was closed.");
+            return ok(json);
+        }
+        playerInfo.outSocket.write(Json.newObject().put("videoId", videoId));
         json.put("error", false)
             .put("status", Json.newObject()
                 .put("status", "playing")
@@ -118,6 +124,13 @@ public class Application extends Controller {
                     @Override
                     public void invoke() throws Throwable {
                         players.remove(playerId, playerInfo);
+                    }
+                });
+
+                jsonNodeIn.onMessage(new F.Callback<JsonNode>() {
+                    @Override
+                    public void invoke(JsonNode jsonNode) throws Throwable {
+                        System.out.println("Player says:"+jsonNode.toString());
                     }
                 });
             }

@@ -21,8 +21,8 @@ youtubeSearch.controller('YouTubeSearchCtrl', function ($scope) {
     $scope.playError = false
     $scope.playStatus = null
 
-    $scope.onPlay = function (videoId, thumbnailUrl) {
-        var playRoute = jsRoutes.controllers.Application.playVideo(videoId, thumbnailUrl)
+    $scope.onPlay = function (playerId, videoId, thumbnailUrl) {
+        var playRoute = jsRoutes.controllers.Application.playVideo(playerId, videoId, thumbnailUrl)
 
         playRoute.ajax().done (function(res) {
             $scope.playError = res.error
