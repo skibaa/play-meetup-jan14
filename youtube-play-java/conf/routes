@@ -3,11 +3,13 @@
 # ~~~~
 
 # Home page
-GET         /                     controllers.Application.index()
-GET         /player               controllers.Application.player()
-GET         /remote               controllers.Application.remote()
+GET         /                        controllers.Application.index()
+GET         /player                  controllers.Application.player()
+GET         /remote                  controllers.Application.remote()
+GET         /javascriptRoutes        controllers.Application.javascriptRoutes()
+GET         /search                  controllers.Application.search()
 
-POST        /connectRemote        controllers.Application.connectRemote()
+POST        /connectRemote           controllers.Application.connectRemote()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file         controllers.Assets.at(path="/public", file)
+GET         /assets/*file            controllers.Assets.at(path="/public", file)

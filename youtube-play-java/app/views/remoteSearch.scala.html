@@ -1,11 +1,31 @@
 @(playerId:Int)
 
 @main("YouTube Remote") {
-
+<script>
+  var onSearch = function (evt) {
+      jsRoutes.controllers.Application.search( ).ajax( ).done(function(res) {
+        alert(res.test);
+      });
+  }
+</script>
 } {
-    <div class="center-block text-center">
+    <div class="center-block text-center" xmlns="http://www.w3.org/1999/html">
         <h1>Successfully connected</h1>
         <p>Player ID: @playerId</p>
     </div>
-    <hr>
+
+    <hr/>
+
+    <form class="form-inline" role="form">
+        <div class="form-group  col-sm-6">
+            <input type="text" id="query" class="form-control" placeholder="Search"/>
+        </div>
+        <div class="form-group">
+            <div class="btn btn-primary form-control" onclick="onSearch()">Search</div>
+        </div>
+    </form>
+
+    <hr/>
+
+
 }
