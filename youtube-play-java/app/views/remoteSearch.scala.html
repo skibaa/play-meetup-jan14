@@ -32,12 +32,12 @@
     </div>
 
     <table class="table" ng-hide="searchError">
-        <tr ng-repeat="result in searchResults">
+        <tr ng-repeat="item in searchResults.items">
             <td>
-                <h4><a href="{{result.videoId}}">{{result.title}}</a></h4>
-                {{result.description}}
+                <h4><a href="{{item.id.videoId}}">{{item.snippet.title}}</a></h4>
+                {{item.snippet.description}}
             </td>
-            <td><img src="{{result.thumbnail}}"></td>
+            <td><img src="{{item.snippet.thumbnails.default.url}}"></td>
         </tr>
     </table>
 }
