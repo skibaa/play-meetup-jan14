@@ -3,6 +3,7 @@ package controllers;
 import models.PlayerConnect;
 import play.*;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.*;
 
 import views.html.*;
@@ -37,5 +38,18 @@ public class Application extends Controller {
 
         PlayerConnect playerConnect = form.get();
         return ok(remoteSearch.render(playerConnect.playerId));
+    }
+
+    public static Result javascriptRoutes() {
+        response().setContentType("text/javascript");
+        return ok(
+            Routes.javascriptRouter("jsRoutes",
+                controllers.routes.javascript.Application.search()
+            )
+        );
+    }
+
+    public static Result search() {
+        return ok(Json.newObject().put("test", "passed"));
     }
 }
