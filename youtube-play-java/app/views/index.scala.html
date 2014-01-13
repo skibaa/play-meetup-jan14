@@ -9,7 +9,7 @@
     <div class="row text-center">
         <div class="col-lg-5 btn btn-primary">
             <h4>Player</h4>
-            <img class="img-rounded" src="@routes.Assets.at("images/child-television_1358457c.jpg")">
+            <img class="img-rounded" src="@routes.Assets.at("images/child-television_1358457c.jpg")" onclick="openPlayer();">
             <br/>
         </div>
         <div class="col-lg-5 col-lg-offset-2 btn btn-primary">
@@ -18,4 +18,10 @@
             <br/>
         </div>
     </div>
+} {
+    <script>
+        var openPlayer=function() {
+            window.open("player", '_blank')
+        }
+    </script>
 }
