@@ -7,7 +7,7 @@ GET         /                        controllers.Application.index()
 GET         /player                  controllers.Application.player()
 GET         /remote                  controllers.Application.remote()
 GET         /javascriptRoutes        controllers.Application.javascriptRoutes()
-GET         /search                  controllers.Application.search()
+GET         /search                  controllers.Application.search(query:String)
 
 POST        /connectRemote           controllers.Application.connectRemote()
 
