@@ -1,21 +1,15 @@
 @()
 
 @main("YouTube Remote") {
-    <div class="center-block text-center">
-        <h1>YouTube remote control</h1>
-        <p>This application allows to search videos on YouTube and to play them in another browser</p>
-    </div>
+    <h1>YouTube remote control</h1>
+    <p>This application allows to search videos on YouTube and to play them in another browser</p>
     <hr>
-    <div class="row text-center">
-        <div class="col-lg-5 btn btn-primary">
-            <h4>Player</h4>
-            <img class="img-rounded" src="@routes.Assets.at("images/child-television_1358457c.jpg")">
-            <br/>
-        </div>
-        <div class="col-lg-5 col-lg-offset-2 btn btn-primary">
-            <h4>Remote</h4>
-            <img class="img-rounded" src="@routes.Assets.at("images/111210_pillow_remote_control_1.jpg")">
-            <br/>
-        </div>
-    </div>
+    <button>
+        <h4>Player</h4>
+        <img class="img-rounded" src="@routes.Assets.at("images/child-television_1358457c.jpg")">
+    </button>
+    <button>
+        <h4>Remote</h4>
+        <img class="img-rounded" src="@routes.Assets.at("images/111210_pillow_remote_control_1.jpg")">
+    </button>
 }
