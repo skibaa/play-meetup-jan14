@@ -31,10 +31,32 @@
         <div class="panel-body"><pre>{{searchError}}</pre></div>
     </div>
 
+    <div class="panel panel-danger" ng-show="playError">
+        <div class="panel-heading">
+            <h3 class="panel-title">Play error</h3>
+        </div>
+        <div class="panel-body"><pre>{{playError}}</pre></div>
+    </div>
+
+    <div class="panel panel-success" ng-show="playStatus">
+        <div class="panel-heading">
+            <h3 class="panel-title">Playing status</h3>
+        </div>
+        <div class="panel-body">
+            <h4>{{playStatus.status}}</h4>
+            <img ng-src="{{playStatus.thumbnail}}"/>
+        </div>
+    </div>
+
     <table class="table" ng-hide="searchError">
         <tr ng-repeat="item in searchResults.items">
             <td>
-                <h4><a href="{{item.id.videoId}}">{{item.snippet.title}}</a></h4>
+                <h4>
+                    <div class="btn btn-default" ng-click="onPlay(item.id.videoId, item.snippet.thumbnails.default.url)">
+                        <span class="glyphicon glyphicon-play"></span>
+                    </div>
+                    {{item.snippet.title}}
+                </h4>
                 {{item.snippet.description}}
             </td>
             <td><img src="{{item.snippet.thumbnails.default.url}}"></td>
