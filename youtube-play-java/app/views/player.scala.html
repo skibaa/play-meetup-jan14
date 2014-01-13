@@ -2,6 +2,9 @@
 
 <!DOCTYPE html>
 <html>
+  <head>
+      <script src="@routes.Assets.at("javascripts/jquery-1.10.2.min.js")" type="text/javascript"></script>
+  </head>
   <body>
       <h3>ID: @id</h3>
       <h2 id="socketError">WebSocket not connected</h2>
@@ -20,11 +23,11 @@
 
       remoteWebSocket.onopen = function() {
           $("#socketError").hide()
-          remoteWebSocket.send("WS is open")
+          remoteWebSocket.send(JSON.stringify({status:'open' }))
       }
 
       remoteWebSocket.onmessage = function(message) {
-          var data = message.data
+          var data = JSON.parse(message.data)
           console.log('data:'+data);
           if(data.error) {
               $("#socketError").text(data.error)
@@ -67,7 +70,7 @@
       var done = false;
       function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.PLAYING && !done) {
-          setTimeout(stopVideo, 6000);
+          //setTimeout(stopVideo, 6000);
           done = true;
         }
       }
@@ -75,7 +78,6 @@
         player.stopVideo();
       }
     </script>
-    <script src="@routes.Assets.at("javascripts/jquery-1.10.2.min.js")" type="text/javascript"></script>
 
   </body>
 </html>

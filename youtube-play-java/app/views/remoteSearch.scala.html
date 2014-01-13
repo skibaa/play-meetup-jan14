@@ -52,7 +52,7 @@
         <tr ng-repeat="item in searchResults.items">
             <td>
                 <h4>
-                    <div class="btn btn-default" ng-click="onPlay(item.id.videoId, item.snippet.thumbnails.default.url)">
+                    <div class="btn btn-default" ng-click="onPlay(@playerId, item.id.videoId, item.snippet.thumbnails.default.url)">
                         <span class="glyphicon glyphicon-play"></span>
                     </div>
                     {{item.snippet.title}}
